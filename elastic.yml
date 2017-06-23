@@ -1,0 +1,42 @@
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
+#
+# Work in progress.  Not yet supported
+#
+
+version: "2.0"
+services:
+  elasticsearch:
+    extends:
+      file: common-services.yml
+      service: elasticsearch
+  kibana:
+    extends:
+      file: common-services.yml
+      service: kibana
+    links:
+      - elasticsearch
+  redis:
+    extends:
+      file: common-services.yml
+      service: redis
+  rabbitmq:
+    extends:
+      file: common-services.yml
+      service: rabbitmq
+  dashboard:
+    extends:
+      file: common-services.yml
+      service: dashboard
+    links:
+      - redis
+      - crawler
+  crawler:
+    extends:
+      file: common-services.yml
+      service: crawler
+    links:
+      - elasticsearch
+      - redis
+      - rabbitmq
